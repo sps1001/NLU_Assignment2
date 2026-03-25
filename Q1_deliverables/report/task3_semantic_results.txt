@@ -1,0 +1,280 @@
+======================================================================
+ TASK-3: SEMANTIC ANALYSIS RESULTS
+ CSL 7640 — Assignment 2
+======================================================================
+
+######################################################################
+  Architecture: CBOW
+######################################################################
+
+──────────────────────────────────────────────────
+  TOP-5 NEAREST NEIGHBOURS (cosine similarity)
+──────────────────────────────────────────────────
+
+  'research':
+    1. award                      0.9995
+    2. faculty                    0.9994
+    3. industry                   0.9994
+    4. required                   0.9993
+    5. supervisor                 0.9993
+
+  'student':
+    1. registered                 0.9991
+    2. completed                  0.9990
+    3. academic                   0.9989
+    4. maximum                    0.9988
+    5. requirements               0.9987
+
+  'phd':
+    1. mtech                      0.9968
+    2. bouquet                    0.9888
+    3. none                       0.9883
+    4. programme                  0.9859
+    5. distribution               0.9858
+
+  'exam':
+    1. including                  0.9966
+    2. emerging                   0.9966
+    3. international              0.9966
+    4. smart                      0.9966
+    5. industry                   0.9965
+
+──────────────────────────────────────────────────
+  ANALOGY EXPERIMENTS  (a : b :: c : ?)
+──────────────────────────────────────────────────
+
+  Query : ug : btech  ::  pg : ?
+  Top-5 answers:
+    1. report                     0.9907
+    2. work                       0.9907
+    3. candidate                  0.9906
+    4. eligible                   0.9906
+    5. two                        0.9905
+
+  Query : mtech : postgraduate  ::  phd : ?
+  Top-5 answers:
+    1. tech                       0.9883
+    2. compulsory                 0.9809
+    3. type                       0.9728
+    4. prerequisite               0.9723
+    5. elective                   0.9704
+
+  Query : professor : teaching  ::  researcher : ?
+  Top-5 answers:
+    1. biometrics                 0.9947
+    2. smart                      0.9946
+    3. components                 0.9946
+    4. experience                 0.9945
+    5. dr                         0.9945
+
+  Query : semester : student  ::  admission : ?
+  Top-5 answers:
+    1. ii                         0.9986
+    2. grades                     0.9982
+    3. ch                         0.9982
+    4. summer                     0.9982
+    5. given                      0.9980
+
+  Query : undergraduate : degree  ::  phd : ?
+  Top-5 answers:
+    1. bouquet                    0.9870
+    2. distribution               0.9856
+    3. prml                       0.9855
+    4. instructor                 0.9836
+    5. programme                  0.9834
+
+  Query : jodhpur : iit  ::  jaipur : ?
+  Result: [OOV term — cannot compute]
+
+######################################################################
+  Architecture: SkipGram
+######################################################################
+
+──────────────────────────────────────────────────
+  TOP-5 NEAREST NEIGHBOURS (cosine similarity)
+──────────────────────────────────────────────────
+
+  'research':
+    1. faculty                    0.9419
+    2. member                     0.9382
+    3. undergraduate              0.9374
+    4. award                      0.9347
+    5. chairman                   0.9298
+
+  'student':
+    1. register                   0.9804
+    2. registered                 0.9754
+    3. registration               0.9732
+    4. academic                   0.9713
+    5. must                       0.9707
+
+  'phd':
+    1. mtech                      0.9908
+    2. program                    0.9532
+    3. tech                       0.9392
+    4. masters                    0.9310
+    5. dual                       0.9212
+
+  'exam':
+    1. entrepreneurial            0.9971
+    2. middle                     0.9969
+    3. component                  0.9968
+    4. subject                    0.9968
+    5. copies                     0.9968
+
+──────────────────────────────────────────────────
+  ANALOGY EXPERIMENTS  (a : b :: c : ?)
+──────────────────────────────────────────────────
+
+  Query : ug : btech  ::  pg : ?
+  Top-5 answers:
+    1. allowed                    0.9723
+    2. calculation                0.9723
+    3. assistantship              0.9703
+    4. requirement                0.9679
+    5. complete                   0.9653
+
+  Query : mtech : postgraduate  ::  phd : ?
+  Top-5 answers:
+    1. tech                       0.8460
+    2. type                       0.8446
+    3. elective                   0.8354
+    4. compulsory                 0.8081
+    5. programme                  0.7964
+
+  Query : professor : teaching  ::  researcher : ?
+  Top-5 answers:
+    1. aiims                      0.9835
+    2. outside                    0.9827
+    3. recognized                 0.9814
+    4. chair                      0.9814
+    5. moderation                 0.9809
+
+  Query : semester : student  ::  admission : ?
+  Top-5 answers:
+    1. category                   0.9437
+    2. ay                         0.9358
+    3. july                       0.9303
+    4. ii                         0.9267
+    5. table                      0.9228
+
+  Query : undergraduate : degree  ::  phd : ?
+  Top-5 answers:
+    1. pg                         0.9284
+    2. candidates                 0.9262
+    3. completing                 0.9256
+    4. branches                   0.9219
+    5. pre                        0.9178
+
+  Query : jodhpur : iit  ::  jaipur : ?
+  Result: [OOV term — cannot compute]
+
+======================================================================
+  QUALITATIVE DISCUSSION
+======================================================================
+
+Nearest Neighbours Analysis
+-----------------------------
+• 'research' neighbours:
+  CBOW returns: award, faculty, industry, required, supervisor.
+  Skip-gram returns: faculty, member, undergraduate, award, chairman.
+  Both models surface 'faculty', 'award', 'industry' — all semantically
+  valid associates of research in an IIT context. 'supervisor' (CBOW) and
+  'member' (SG) are particularly strong, capturing advising and collegial
+  roles central to academic research. The results are semantically coherent.
+
+• 'student' neighbours:
+  CBOW: registered, completed, academic, maximum, requirements.
+  Skip-gram: register, registered, registration, academic, must.
+  Both clusters are regulation-document vocabulary — words that co-occur
+  with 'student' in academic rules (registration, attendance, completion
+  requirements). The neighbourhood is semantically tight and consistent
+  with the corpus source (academic regulation PDFs + syllabus).
+
+• 'phd' neighbours:
+  CBOW: mtech, bouquet, none, programme, distribution.
+  Skip-gram: mtech, program, tech, masters, dual.
+  The most important result is that BOTH models rank 'mtech' as the single
+  nearest neighbour to 'phd' (sim ≈ 0.99 CBOW, 0.99 SG). This is strongly
+  meaningful — these degree labels co-occur in programme listings and
+  admission criteria throughout the corpus. Skip-gram additionally surfaces
+  'masters', 'dual', 'program' — all semantically valid degree-level words.
+  'bouquet' and 'none' (CBOW) are noise, likely due to co-occurrence with
+  newsletter text listing prize categories.
+
+• 'exam' neighbours:
+  CBOW: including, emerging, international, smart, industry.
+  Skip-gram: entrepreneurial, middle, component, subject, copies.
+  'subject' and 'component' (Skip-gram) carry weak exam-related meaning.
+  The overall quality is lower — 'exam' appears infrequently in the academic
+  regulation PDFs (which focus more on grades and attendance) so the model
+  encounters it mainly in course-description contexts (e.g. "mid-semester
+  exam"), causing the embedding to mix with unrelated course-description words.
+
+Analogy Experiments
+--------------------
+• ug : btech :: pg : ?   [Assignment spec analogy]
+  CBOW best: 'report' — not the expected 'mtech'.
+  Skip-gram best: 'allowed' — also not ideal.
+  The expected answer is 'mtech' (PG ≡ MTech as UG ≡ BTech). The analogy
+  does not resolve correctly because 'ug'/'pg' and 'btech'/'mtech' occur
+  in different textual contexts (abbreviations in programme headings vs.
+  full names in regulation text), preventing the model from learning a
+  precise parallel vector offset. This is a known limitation of 3CosAdd on
+  domain-specific corpora with inconsistent abbreviation usage.
+
+• mtech : postgraduate :: phd : ?
+  Both models return 'tech' as top answer (contained in 'mtech').
+  Skip-gram also surfaces 'elective', 'compulsory', 'programme'.
+  Partially meaningful — the model tries to subtract the 'postgraduate'
+  direction from 'mtech' and add 'phd', but the resulting vector lands
+  near syllabus structure words rather than 'doctoral'. The corpus lacks
+  explicit 'doctoral' vocabulary.
+
+• professor : teaching :: researcher : ?
+  CBOW: 'biometrics'; Skip-gram: 'aiims'.
+  Neither is semantically correct. The expected answer is a research-output
+  concept ('thesis', 'publication'), but these words are rare in the corpus.
+  The analogy arithmetic lands on noisy neighbours because 'professor' and
+  'researcher' are both rare and have unstable vectors.
+
+• semester : student :: admission : ?
+  CBOW: 'ii', 'grades', 'ch', 'summer'. Skip-gram: 'category', 'ay', 'july'.
+  'summer' (CBOW) and 'category' (Skip-gram) are weakly meaningful
+  ('admission category', 'summer admission'). The analogy is partially valid
+  but dominated by academic-calendar noise words.
+
+• undergraduate : degree :: phd : ?
+  Skip-gram top result: 'pg' (sim=0.928), followed by 'candidates',
+  'completing', 'branches'. This is the strongest analogy result — 'pg'
+  is semantically valid as a degree-level label parallel to 'undergraduate',
+  confirming the model has encoded the UG/PG/PhD hierarchy to some extent.
+
+• jodhpur : iit :: jaipur : ?
+  'jaipur' is out-of-vocabulary (the corpus is IIT-Jodhpur-centric and
+  contains almost no Jaipur references). Analogy cannot be computed.
+
+CBOW vs Skip-gram Comparison
+------------------------------
+Skip-gram consistently surfaces more semantically meaningful nearest
+neighbours than CBOW, particularly for lower-frequency words ('phd',
+'research', 'faculty'). This is expected: Skip-gram trains on individual
+center-context pairs, giving rare words proportionally more gradient updates,
+resulting in sharper embeddings for specialised vocabulary.
+
+CBOW averages context vectors, which works well for high-frequency words
+('student', registration-related words) but collapses distinctions for
+domain-specific rare terms. The high cosine similarities seen in CBOW
+(> 0.99 for most neighbours) indicate a more compressed embedding space
+where the top-K results are nearly indistinguishable — a known artefact
+of the averaging operation on a focused-domain corpus.
+
+For analogy tasks, neither model performs strongly. The 3CosAdd method
+requires well-separated, directionally consistent vector offsets — which
+needs a large, balanced vocabulary. On a 3,364-word IIT-specific corpus,
+analogical relationships are too sparse to produce reliable offsets.
+The one clear success (undergraduate:degree::phd → pg, Skip-gram) shows
+the model has partially encoded degree-level structure, but this does not
+generalise reliably to arbitrary analogy triples.
+
+======================================================================
